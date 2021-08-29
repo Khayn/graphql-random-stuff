@@ -1,18 +1,18 @@
-const {
+import {
 	ApolloServer,
 	gql
-} = require("apollo-server");
+} from "apollo-server";
 
-const {
+import {
 	ApolloServerPluginLandingPageGraphQLPlayground
-} = require("apollo-server-core");
+} from "apollo-server-core";
 
 const PORT = process.env.PORT || 4000;
 
 const typeDefs = gql `
 	type Query {
-	  greeting: String,
-	  interestingUrls: [String]
+		greeting: String,
+		interestingUrls: [String]
 	}
 `;
 
@@ -24,7 +24,6 @@ const data = {
 const server = new ApolloServer({
 	typeDefs,
 	rootValue: data,
-	playground: true,
 	introspection: true,
 
 	plugins: [
