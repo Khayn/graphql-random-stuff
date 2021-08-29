@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 4000;
  */
 const typeDefs = gql `
 	type Query {
+		"a simple greeting",
 		greeting: String!,
 		interestingUrls: [String]!,
 		randomDiceThrow: Int!,
@@ -25,6 +26,7 @@ const typeDefs = gql `
 		isTodayFriday: Boolean!,
 		today: DayOfWeek!,
 		workDays: [DayOfWeek!]!,
+		"either it greets you.. or not"
 		schroedingerCatGreeting: String,
 		randomQuote: Quote!
 	} 
@@ -39,6 +41,10 @@ const typeDefs = gql `
 	SUN
 }
 
+"""
+# this object respresents a quote
+## contains a text and author's name
+"""
 type Quote {
 	text: String,
 	author: String
