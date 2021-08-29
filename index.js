@@ -1,29 +1,64 @@
-import {
+const {
 	ApolloServer,
 	gql
-} from "apollo-server";
+} = require("apollo-server");
 
-import {
+const {
 	ApolloServerPluginLandingPageGraphQLPlayground
-} from "apollo-server-core";
+} = require("apollo-server-core");
 
 const PORT = process.env.PORT || 4000;
 
+/**
+ * schema definition
+ */
 const typeDefs = gql `
 	type Query {
 		greeting: String,
-		interestingUrls: [String]
+		interestingUrls: [String],
+		randomDiceThrow: Int,
+		luckyNumbers: [Int],
+		pi: Float,
+		isTodayFriday: Boolean,
+		randomCoinTossesUntilTrue: [Boolean]
 	}
 `;
 
-const data = {
-	greeting: "Hello!",
-	interestingUrls: ["www.wsieci.pl", "www.dorzeczy.pl"]
+/**
+ * prepares result map, with keys corresponding to typeDefs 
+ * @returns server answer
+ */
+function rootValue() {
+	const getRandomDiceThrow = (sides) => Math.ceil(Math.random() * sides);
+	const today = new Date();
+	const randomCoinToss = () => Math.random() > 0.5;
+	const getRandomCoinTossesUntilTrue = () => {
+		const result = [];
 
-}
+		do {
+			result.push(randomCoinToss());
+		} while (!result[result.length - 1]);
+
+		return result;
+	};
+
+	return {
+		greeting: "Hello!",
+		interestingUrls: ["www.wsieci.pl", "www.dorzeczy.pl"],
+		randomDiceThrow: getRandomDiceThrow(6),
+		luckyNumbers: [5, 7],
+		pi: Math.PI,
+		isTodayFriday: today.getDay() === 5,
+		randomCoinTossesUntilTrue: getRandomCoinTossesUntilTrue()
+	};
+};
+
+/**
+ * server instance
+ */
 const server = new ApolloServer({
 	typeDefs,
-	rootValue: data,
+	rootValue,
 	introspection: true,
 
 	plugins: [
