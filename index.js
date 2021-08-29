@@ -14,15 +14,14 @@ const PORT = process.env.PORT || 4000;
  */
 const typeDefs = gql `
 	type Query {
-		greeting: String,
-		interestingUrls: [String],
-		randomDiceThrow: Int,
-		luckyNumbers: [Int],
-		pi: Float,
-		isTodayFriday: Boolean,
-		randomCoinTossesUntilTrue: [Boolean],
-		today: DayOfWeek,
-		workDays: [DayOfWeek]
+		greeting: String!,
+		interestingUrls: [String]!,
+		randomDiceThrow: Int!,
+		luckyNumbers: [Int!],
+		pi: Float!,
+		isTodayFriday: Boolean!,,
+		today: DayOfWeek!,
+		workDays: [DayOfWeek!]!
 	}
 
 	enum DayOfWeek {
@@ -67,7 +66,7 @@ function rootValue() {
 		pi: Math.PI,
 		isTodayFriday: today.getDay() === 5,
 		randomCoinTossesUntilTrue: getRandomCoinTossesUntilTrue(),
-		workDays: DAYS_OF_WEEK.slice(1,6),
+		workDays: DAYS_OF_WEEK.slice(1, 6),
 		today: DAYS_OF_WEEK[today.getDay()]
 	};
 }
