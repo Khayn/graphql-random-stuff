@@ -19,7 +19,9 @@ const data = {
 }
 const server = new ApolloServer({
 	typeDefs,
-	rootValue: data
+	rootValue: data,
+	playground: true,
+	introspection: false
 });
 
 server.listen({
