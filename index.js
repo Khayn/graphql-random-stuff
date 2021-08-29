@@ -1,92 +1,16 @@
 const {
 	ApolloServer,
-	gql
 } = require("apollo-server");
 
 const {
 	ApolloServerPluginLandingPageGraphQLPlayground
 } = require("apollo-server-core");
 
-const Quotes = require("inspirational-quotes");
+const rootValue = require("./rootValue");
+
+const typeDefs = require("./typeDefs");
 
 const PORT = process.env.PORT || 4000;
-
-/**
- * schema definition
- */
-const typeDefs = gql `
-	type Query {
-		"a simple greeting",
-		greeting: String!,
-		interestingUrls: [String]!,
-		randomDiceThrow: Int!,
-		randomCoinTossesUntilTrue: [Boolean],
-		luckyNumbers: [Int!],
-		pi: Float!,
-		isTodayFriday: Boolean!,
-		today: DayOfWeek!,
-		workDays: [DayOfWeek!]!,
-		"either it greets you.. or not"
-		schroedingerCatGreeting: String,
-		randomQuote: Quote!
-	} 
-
-	enum DayOfWeek {
-	MON,
-	TUE,
-	WED,
-	THU,
-	FRI,
-	SAT,
-	SUN
-}
-
-"""
-# this object respresents a quote
-## contains a text and author's name
-"""
-type Quote {
-	text: String,
-	author: String
-}
-`;
-
-
-/**
- * prepares result map, with keys corresponding to typeDefs 
- * @returns server answer
- */
-function rootValue() {
-	const today = new Date();
-	const DAYS_OF_WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SUN"];
-
-	const getRandomDiceThrow = (sides) => Math.ceil(Math.random() * sides);
-
-	const randomCoinToss = () => Math.random() > 0.5;
-	const getRandomCoinTossesUntilTrue = () => {
-		const result = [];
-
-		do {
-			result.push(randomCoinToss());
-		} while (!result[result.length - 1]);
-
-		return result;
-	};
-
-	return {
-		greeting: "Hello!",
-		interestingUrls: ["www.wsieci.pl", "www.dorzeczy.pl"],
-		randomDiceThrow: getRandomDiceThrow(6),
-		schroedingerCatGreeting: randomCoinToss() ? "Meow!" : null,
-		luckyNumbers: [5, 7],
-		pi: Math.PI,
-		isTodayFriday: today.getDay() === 5,
-		randomCoinTossesUntilTrue: getRandomCoinTossesUntilTrue(),
-		workDays: DAYS_OF_WEEK.slice(1, 6),
-		today: DAYS_OF_WEEK[today.getDay()],
-		randomQuote: Quotes.getQuote()
-	};
-}
 
 /**
  * server instance
@@ -104,3 +28,6 @@ const server = new ApolloServer({
 server.listen({
 	port: PORT
 }).then(result => console.log(result.url));
+
+
+module.exports = typeDefs;
