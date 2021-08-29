@@ -7,6 +7,8 @@ const {
 	ApolloServerPluginLandingPageGraphQLPlayground
 } = require("apollo-server-core");
 
+const Quotes = require("inspirational-quotes");
+
 const PORT = process.env.PORT || 4000;
 
 /**
@@ -23,7 +25,8 @@ const typeDefs = gql `
 		isTodayFriday: Boolean!,
 		today: DayOfWeek!,
 		workDays: [DayOfWeek!]!,
-		schroedingerCatGreeting: String
+		schroedingerCatGreeting: String,
+		randomQuote: Quote!
 	} 
 
 	enum DayOfWeek {
@@ -35,8 +38,12 @@ const typeDefs = gql `
 	SAT,
 	SUN
 }
-`;
 
+type Quote {
+	text: String,
+	author: String
+}
+`;
 
 
 /**
@@ -70,7 +77,8 @@ function rootValue() {
 		isTodayFriday: today.getDay() === 5,
 		randomCoinTossesUntilTrue: getRandomCoinTossesUntilTrue(),
 		workDays: DAYS_OF_WEEK.slice(1, 6),
-		today: DAYS_OF_WEEK[today.getDay()]
+		today: DAYS_OF_WEEK[today.getDay()],
+		randomQuote: Quotes.getQuote()
 	};
 }
 
