@@ -17,12 +17,14 @@ const typeDefs = gql `
 		greeting: String!,
 		interestingUrls: [String]!,
 		randomDiceThrow: Int!,
+		randomCoinTossesUntilTrue: [Boolean],
 		luckyNumbers: [Int!],
 		pi: Float!,
-		isTodayFriday: Boolean!,,
+		isTodayFriday: Boolean!,
 		today: DayOfWeek!,
-		workDays: [DayOfWeek!]!
-	}
+		workDays: [DayOfWeek!]!,
+		schroedingerCatGreeting: String
+	} 
 
 	enum DayOfWeek {
 	MON,
@@ -62,6 +64,7 @@ function rootValue() {
 		greeting: "Hello!",
 		interestingUrls: ["www.wsieci.pl", "www.dorzeczy.pl"],
 		randomDiceThrow: getRandomDiceThrow(6),
+		schroedingerCatGreeting: randomCoinToss() ? "Meow!" : null,
 		luckyNumbers: [5, 7],
 		pi: Math.PI,
 		isTodayFriday: today.getDay() === 5,
