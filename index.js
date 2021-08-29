@@ -3,6 +3,10 @@ const {
 	gql
 } = require("apollo-server");
 
+const {
+	ApolloServerPluginLandingPageGraphQLPlayground
+} = require("apollo-server-core");
+
 const PORT = process.env.PORT || 4000;
 
 const typeDefs = gql `
@@ -21,7 +25,11 @@ const server = new ApolloServer({
 	typeDefs,
 	rootValue: data,
 	playground: true,
-	introspection: false
+	introspection: false,
+
+	plugins: [
+		ApolloServerPluginLandingPageGraphQLPlayground(),
+	],
 });
 
 server.listen({
