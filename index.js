@@ -3,6 +3,8 @@ const {
 	gql
 } = require("apollo-server");
 
+const PORT = process.env.PORT || 4000;
+
 const typeDefs = gql `
 	type Query {
 	  greeting: String,
@@ -21,5 +23,5 @@ const server = new ApolloServer({
 });
 
 server.listen({
-	port: 4000
+	port: PORT
 }).then(result => console.log(result.url));
