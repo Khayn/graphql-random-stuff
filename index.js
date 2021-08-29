@@ -20,17 +20,34 @@ const typeDefs = gql `
 		luckyNumbers: [Int],
 		pi: Float,
 		isTodayFriday: Boolean,
-		randomCoinTossesUntilTrue: [Boolean]
+		randomCoinTossesUntilTrue: [Boolean],
+		today: DayOfWeek,
+		workDays: [DayOfWeek]
 	}
+
+	enum DayOfWeek {
+	MON,
+	TUE,
+	WED,
+	THU,
+	FRI,
+	SAT,
+	SUN
+}
 `;
+
+
 
 /**
  * prepares result map, with keys corresponding to typeDefs 
  * @returns server answer
  */
 function rootValue() {
-	const getRandomDiceThrow = (sides) => Math.ceil(Math.random() * sides);
 	const today = new Date();
+	const DAYS_OF_WEEK = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SUN"];
+
+	const getRandomDiceThrow = (sides) => Math.ceil(Math.random() * sides);
+
 	const randomCoinToss = () => Math.random() > 0.5;
 	const getRandomCoinTossesUntilTrue = () => {
 		const result = [];
@@ -49,9 +66,11 @@ function rootValue() {
 		luckyNumbers: [5, 7],
 		pi: Math.PI,
 		isTodayFriday: today.getDay() === 5,
-		randomCoinTossesUntilTrue: getRandomCoinTossesUntilTrue()
+		randomCoinTossesUntilTrue: getRandomCoinTossesUntilTrue(),
+		workDays: DAYS_OF_WEEK.slice(1,6),
+		today: DAYS_OF_WEEK[today.getDay()]
 	};
-};
+}
 
 /**
  * server instance
