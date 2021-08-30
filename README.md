@@ -1,4 +1,4 @@
-# graphql-simple
+# graphql-random-stuff
 Prosty projekt GraphQL z Apollo Server, tworzony podczas nauki https://graphqlmastery.pl/
 
 Do uruchomienia lokalnie poleceniem ```npm run dev```
