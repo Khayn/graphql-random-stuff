@@ -15,7 +15,9 @@
   },
   "dependencies": {
     "apollo-server": "^3.4.1",
+    "got": "^12.1.0",
     "graphql": "^15.5.1",
-    "inspirational-quotes": "^1.0.8"
+    "inspirational-quotes": "^1.0.8",
+    "package-json": "^8.1.0"
   }
 }
