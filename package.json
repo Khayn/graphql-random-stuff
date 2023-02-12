@@ -11,11 +11,11 @@
   "author": "khayn",
   "license": "MIT",
   "devDependencies": {
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.20"
   },
   "dependencies": {
     "apollo-server": "^3.4.1",
-    "got": "^12.1.0",
+    "got": "^12.5.3",
     "graphql": "^15.5.1",
     "inspirational-quotes": "^1.0.8",
     "package-json": "^8.1.0"
